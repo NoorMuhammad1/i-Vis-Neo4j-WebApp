@@ -8,6 +8,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.App{
+  padding:5em;
+}
+#input_menu{
+  display: flex;
+  margin-bottom: 2rem;
+}
+input{
+  padding:1rem;
+  font-size: 2rem;
+}
+input[name='actor']{
+  flex:4;
+  margin-right:10px;
+}
+input[name='number']{
+  flex:1;
+  margin:0 10px;
+}
+button{
+  flex:1;
+  font-size: 1.4rem;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

@@ -5,17 +5,12 @@ app.use(cors());
 app.use(express.json());
 const PORT = 4000;
 const neo4j = require("neo4j-driver");
-
-//CONSTANTS
-const DATABASE = "neo4j";
-const USERNAME = "neo4j";
-const PASSWORD = "Emmawatson00000#";
+require("dotenv").config({ override: true });
 
 const driver = neo4j.driver(
-  `bolt://127.0.0.1:7687//${DATABASE}`,
-  neo4j.auth.basic(USERNAME, PASSWORD)
+  `bolt://${process.env.HOST}:7687//${process.env.DATABASE}`,
+  neo4j.auth.basic(process.env.USERNAME, process.env.PASSWORD)
 );
-const session = driver.session();
 
 app.get("/getMovies", async (req, res) => {
   const { actor } = req.query;
@@ -89,7 +84,7 @@ app.get("/", async (req, res) => {
     });
     res.send({ nodes: Object.values(nodes), edges });
   } catch (error) {
-    console.log("error");
+    console.log("error", error.message);
     res.send(error.message);
   }
 });
