@@ -53,8 +53,8 @@ app.get("/", async (req, res) => {
       return 
       [node in nodes(path)| 
       case 
-      when labels(node)[0]="Person" then {type:"node",label:labels(node)[0],name:properties(node).name}
-      when labels(node)[0]="Movie" then {type:"node",label:labels(node)[0],name:properties(node).title}
+      when labels(node)[0]="Person" then {type:"node",label:labels(node)[0],name:properties(node).name,born:properties(node).born}
+      when labels(node)[0]="Movie" then {type:"node",label:labels(node)[0],name:properties(node).title,released:properties(node).released,tagline:properties(node).tagline}
       end 
       ] as path`
     );
@@ -64,6 +64,11 @@ app.get("/", async (req, res) => {
       var fields = record._fields[0];
       for (let i = 0; i < fields.length; i++) {
         let node = fields[i];
+        if (node.label === "Person") {
+          node.born = node.born.low;
+        } else if (node.label === "Movie") {
+          node.released = node.released.low;
+        }
         nodes[node.name] = node;
         if (node.label === "Person") {
           if (i < fields.length - 1) {
